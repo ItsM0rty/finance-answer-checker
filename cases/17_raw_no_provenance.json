@@ -1,0 +1,190 @@
+{
+  "case_id": "17_raw_no_provenance",
+  "as_of_date": "2026-10-01",
+  "stated_definition": {
+    "window_months": 3,
+    "include_pending": false,
+    "burn_basis": "net",
+    "fx_policy": "transaction_date",
+    "include_uncategorised": true,
+    "source": "bank",
+    "exclude_one_offs": false,
+    "union_dedupe": true
+  },
+  "tool_calls": [
+    {
+      "tool_call": {
+        "name": "list_transactions",
+        "args": {
+          "mode": "raw"
+        }
+      },
+      "tool_output": {
+        "transactions": [
+          {
+            "id": "bank:m1",
+            "txn_date": "2026-09-28",
+            "amount_minor": -120000,
+            "currency": "GBP",
+            "category": "payroll",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:m1",
+            "txn_date": "2026-09-25",
+            "amount_minor": -120000,
+            "currency": "GBP",
+            "category": "payroll",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:p1",
+            "txn_date": "2026-09-30",
+            "amount_minor": -45000,
+            "currency": "GBP",
+            "category": "saas",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b1",
+            "txn_date": "2026-08-15",
+            "amount_minor": -80000,
+            "currency": "GBP",
+            "category": "rent",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:l1",
+            "txn_date": "2026-08-14",
+            "amount_minor": -80000,
+            "currency": "GBP",
+            "category": "rent",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b2",
+            "txn_date": "2026-07-20",
+            "amount_minor": -60000,
+            "currency": "GBP",
+            "category": "marketing",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:l2",
+            "txn_date": "2026-07-22",
+            "amount_minor": -60000,
+            "currency": "GBP",
+            "category": "marketing",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:u1",
+            "txn_date": "2026-09-10",
+            "amount_minor": -15000,
+            "currency": "GBP",
+            "category": null,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:u2",
+            "txn_date": "2026-09-05",
+            "amount_minor": -12000,
+            "currency": "GBP",
+            "category": "",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:fx1",
+            "txn_date": "2026-07-15",
+            "amount_minor": -50000,
+            "currency": "EUR",
+            "category": "contractors",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:rev1",
+            "txn_date": "2026-08-01",
+            "amount_minor": 200000,
+            "currency": "USD",
+            "category": "revenue",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:rev2",
+            "txn_date": "2026-09-01",
+            "amount_minor": 150000,
+            "currency": "GBP",
+            "category": "revenue",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:oo1",
+            "txn_date": "2026-09-01",
+            "amount_minor": -500000,
+            "currency": "GBP",
+            "category": "equipment",
+            "description": "",
+            "one_off": true
+          },
+          {
+            "id": "bank:b3",
+            "txn_date": "2026-05-10",
+            "amount_minor": -55000,
+            "currency": "GBP",
+            "category": "opex",
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b4",
+            "txn_date": "2026-04-12",
+            "amount_minor": -58000,
+            "currency": "GBP",
+            "category": "opex",
+            "description": "",
+            "one_off": false
+          }
+        ]
+      }
+    },
+    {
+      "tool_call": {
+        "name": "get_balances",
+        "args": {
+          "mode": "raw"
+        }
+      },
+      "tool_output": {
+        "balances": [
+          {
+            "as_of": "2026-10-01",
+            "amount_minor": 1200000,
+            "currency": "GBP"
+          },
+          {
+            "as_of": "2026-09-28",
+            "amount_minor": 1050000,
+            "currency": "GBP"
+          }
+        ]
+      }
+    }
+  ],
+  "final_answer": "Net burn is GBP 2,206.66; cash balance GBP 12,000.00.",
+  "expected_verdict": {
+    "net_burn": "UNCHECKABLE",
+    "cash_balance": "UNCHECKABLE"
+  }
+}

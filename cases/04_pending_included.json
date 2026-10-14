@@ -1,0 +1,312 @@
+{
+  "as_of_date": "2026-10-01",
+  "stated_definition": {
+    "window_months": 3,
+    "include_pending": false,
+    "burn_basis": "net",
+    "fx_policy": "transaction_date",
+    "include_uncategorised": true,
+    "source": "bank",
+    "exclude_one_offs": false,
+    "union_dedupe": true
+  },
+  "case_id": "04_pending_included",
+  "tool_calls": [
+    {
+      "tool_call": {
+        "name": "list_transactions",
+        "args": {
+          "mode": "provenanced"
+        }
+      },
+      "tool_output": {
+        "transactions": [
+          {
+            "id": "bank:m1",
+            "txn_date": "2026-09-28",
+            "amount_minor": -120000,
+            "currency": "GBP",
+            "category": "payroll",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": true,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:m1",
+            "txn_date": "2026-09-25",
+            "amount_minor": -120000,
+            "currency": "GBP",
+            "category": "payroll",
+            "status": "posted",
+            "source": "ledger",
+            "as_of": "2026-10-01",
+            "matched": true,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:p1",
+            "txn_date": "2026-09-30",
+            "amount_minor": -45000,
+            "currency": "GBP",
+            "category": "saas",
+            "status": "pending",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b1",
+            "txn_date": "2026-08-15",
+            "amount_minor": -80000,
+            "currency": "GBP",
+            "category": "rent",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:l1",
+            "txn_date": "2026-08-14",
+            "amount_minor": -80000,
+            "currency": "GBP",
+            "category": "rent",
+            "status": "posted",
+            "source": "ledger",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b2",
+            "txn_date": "2026-07-20",
+            "amount_minor": -60000,
+            "currency": "GBP",
+            "category": "marketing",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:l2",
+            "txn_date": "2026-07-22",
+            "amount_minor": -60000,
+            "currency": "GBP",
+            "category": "marketing",
+            "status": "posted",
+            "source": "ledger",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:u1",
+            "txn_date": "2026-09-10",
+            "amount_minor": -15000,
+            "currency": "GBP",
+            "category": null,
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:u2",
+            "txn_date": "2026-09-05",
+            "amount_minor": -12000,
+            "currency": "GBP",
+            "category": "",
+            "status": "posted",
+            "source": "ledger",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:fx1",
+            "txn_date": "2026-07-15",
+            "amount_minor": -50000,
+            "currency": "EUR",
+            "category": "contractors",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:rev1",
+            "txn_date": "2026-08-01",
+            "amount_minor": 200000,
+            "currency": "USD",
+            "category": "revenue",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "ledger:rev2",
+            "txn_date": "2026-09-01",
+            "amount_minor": 150000,
+            "currency": "GBP",
+            "category": "revenue",
+            "status": "posted",
+            "source": "ledger",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:oo1",
+            "txn_date": "2026-09-01",
+            "amount_minor": -500000,
+            "currency": "GBP",
+            "category": "equipment",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": true
+          },
+          {
+            "id": "bank:b3",
+            "txn_date": "2026-05-10",
+            "amount_minor": -55000,
+            "currency": "GBP",
+            "category": "opex",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          },
+          {
+            "id": "bank:b4",
+            "txn_date": "2026-04-12",
+            "amount_minor": -58000,
+            "currency": "GBP",
+            "category": "opex",
+            "status": "posted",
+            "source": "bank",
+            "as_of": "2026-10-01",
+            "matched": false,
+            "description": "",
+            "one_off": false
+          }
+        ]
+      }
+    },
+    {
+      "tool_call": {
+        "name": "list_invoices",
+        "args": {}
+      },
+      "tool_output": {
+        "invoices": [
+          {
+            "invoice_id": "inv-101",
+            "due_date": "2026-09-15",
+            "amount_minor": 80000,
+            "currency": "GBP",
+            "paid": false,
+            "vatable": true
+          },
+          {
+            "invoice_id": "inv-102",
+            "due_date": "2026-10-20",
+            "amount_minor": 40000,
+            "currency": "GBP",
+            "paid": false,
+            "vatable": true
+          },
+          {
+            "invoice_id": "inv-103",
+            "due_date": "2026-08-01",
+            "amount_minor": 25000,
+            "currency": "GBP",
+            "paid": true,
+            "vatable": true
+          },
+          {
+            "invoice_id": "inv-104",
+            "due_date": "2026-09-01",
+            "amount_minor": 30000,
+            "currency": "EUR",
+            "paid": false,
+            "vatable": true
+          }
+        ]
+      }
+    },
+    {
+      "tool_call": {
+        "name": "get_balances",
+        "args": {
+          "mode": "provenanced"
+        }
+      },
+      "tool_output": {
+        "balances": [
+          {
+            "as_of": "2026-10-01",
+            "amount_minor": 1200000,
+            "currency": "GBP",
+            "source": "bank"
+          },
+          {
+            "as_of": "2026-09-28",
+            "amount_minor": 1050000,
+            "currency": "GBP",
+            "source": "ledger"
+          }
+        ]
+      }
+    },
+    {
+      "tool_call": {
+        "name": "get_fx_rates",
+        "args": {}
+      },
+      "tool_output": {
+        "rates": {
+          "EUR": {
+            "2026-07-15": 0.86,
+            "2026-09-01": 0.88,
+            "2026-10-01": 0.87
+          },
+          "USD": {
+            "2026-08-01": 0.78,
+            "2026-10-01": 0.79
+          }
+        }
+      }
+    }
+  ],
+  "final_answer": "Net burn is GBP 2,356.66 including pending SaaS charge.",
+  "expected_verdict": {
+    "net_burn": "MATCHES_OTHER_DEFINITION"
+  }
+}
