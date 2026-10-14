@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import textwrap
+
 import json
 import sys
 from typing import Any
@@ -38,26 +40,29 @@ def render_table(rows: list[dict[str, Any]], header: str = "") -> str:
         lines.append(header)
         lines.append("")
     cols = (
-        ("Case", 22),
-        ("Metric", 10),
-        ("Agent answer", 14),
-        ("Recomputed", 14),
-        ("Verdict", 22),
-        ("Likely cause", 42),
+        ("Case", 28),
+        ("Metric", 11),
+        ("Agent answer", 15),
+        ("Recomputed", 15),
+        ("Verdict", 26),
+        ("Likely cause", 48),
     )
     header_line = "".join(f"{name:<{w}}" for name, w in cols)
     lines.append(header_line)
-    lines.append("-" * min(140, len(header_line)))
+    lines.append("-" * len(header_line))
     for r in rows:
-        case_id = str(r.get("case_id", ""))[:22]
-        metric = _metric_label(str(r.get("metric", "")))[:10]
-        claimed = str(r.get("claimed_display", r.get("claimed", "")))[:14]
-        rec = str(r.get("recomputed_display", r.get("recomputed_stated", "n/a")))[:14]
-        verdict = str(r.get("verdict", ""))[:22]
-        cause = str(r.get("likely_cause", r.get("explanation", "")))[:42]
+        case_id = str(r.get("case_id", ""))
+        metric = _metric_label(str(r.get("metric", "")))
+        claimed = str(r.get("claimed_display", r.get("claimed", "")))
+        rec = str(r.get("recomputed_display", r.get("recomputed_stated", "n/a")))
+        verdict = str(r.get("verdict", ""))
+        cause = str(r.get("likely_cause", r.get("explanation", "")))
+        wrapped = textwrap.wrap(cause, width=48) or [""]
         lines.append(
-            f"{case_id:<22} {metric:<10} {claimed:<14} {rec:<14} {verdict:<22} {cause}"
+            f"{case_id:<28}{metric:<11}{claimed:<15}{rec:<15}{verdict:<26}{wrapped[0]}"
         )
+        for extra in wrapped[1:]:
+            lines.append(" " * 95 + extra)
     return "\n".join(lines)
 
 

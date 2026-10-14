@@ -94,7 +94,9 @@ class Definition:
             )
         if self.vat_on_gross != other.vat_on_gross:
             axes.append(
-                "VAT on gross spend" if self.vat_on_gross else "VAT net of VAT in spend"
+                "20% applied to VAT-inclusive spend (VAT not extracted)"
+                if self.vat_on_gross
+                else "VAT extracted from VAT-inclusive spend"
             )
         if self.scenario_hire_applied != other.scenario_hire_applied:
             axes.append(

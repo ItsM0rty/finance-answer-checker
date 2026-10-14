@@ -71,17 +71,21 @@ def find_matching_definitions(
     variants: list[Definition] | None = None,
 ) -> list[Definition]:
     variants = variants or variants_for_metric(metric)
-    matches: list[Definition] = []
+    scored: list[tuple[float, Definition]] = []
+    base = max(abs(float(claimed)), 1.0)
     for d in variants:
         val = compute_metric(metric, data, d, as_of, extra_hire_minor)
         if val is not None and within_tolerance(claimed, val):
-            matches.append(d)
+            scored.append((abs(float(claimed) - float(val)) / base, d))
             continue
         if metric == "net_burn":
             gross_val = monthly_burn_minor(data, d, as_of, basis="gross")
             if gross_val is not None and within_tolerance(claimed, gross_val):
-                matches.append(d)
-    return matches
+                scored.append((abs(float(claimed) - float(gross_val)) / base, d))
+    # Closest reproduction first, so that a definition that reproduces the
+    # figure exactly is preferred over one that is merely within tolerance.
+    scored.sort(key=lambda pair: pair[0])
+    return [d for _, d in scored]
 
 
 def recompute_under_stated(

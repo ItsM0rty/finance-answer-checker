@@ -25,12 +25,9 @@ def _has_provenance(data: CanonicalDataset) -> bool:
     return False
 
 
-def _short_cause(explanation: str, max_len: int = 42) -> str:
-    text = explanation.strip()
-    if len(text) <= max_len:
-        return text
-    cut = text[: max_len - 3].rsplit(" ", 1)[0]
-    return cut + "..."
+def _short_cause(explanation: str) -> str:
+    # The report table wraps long text, so the cause is kept in full.
+    return explanation.strip()
 
 
 def _classify_no_match(
@@ -167,25 +164,30 @@ def attribute_claim(
                 }
 
     if metric == "overdue_total" and not matches:
-        for delta in range(-90, 91):
-            alt = as_of + timedelta(days=delta)
-            if alt == as_of:
-                continue
-            alt_val = overdue_total_minor(data, alt)
-            if within_tolerance(int(claimed_val), alt_val):
-                expl = (
-                    f"Overdue total matches as-of {alt.isoformat()} "
-                    f"rather than {as_of.isoformat()}."
-                )
-                return {
-                    "metric": metric,
-                    "verdict": "MATCHES_OTHER_DEFINITION",
-                    "explanation": expl,
-                    "likely_cause": _short_cause(expl),
-                    "claimed": claimed_val,
-                    "recomputed_stated": recomputed,
-                    "matching_definitions": [f"as_of={alt.isoformat()}"],
-                }
+        alts = [
+            as_of + timedelta(days=delta)
+            for delta in range(-90, 91)
+            if delta != 0
+            and within_tolerance(
+                int(claimed_val), overdue_total_minor(data, as_of + timedelta(days=delta))
+            )
+        ]
+        if alts:
+            lo, hi = min(alts).isoformat(), max(alts).isoformat()
+            where = lo if lo == hi else f"between {lo} and {hi}"
+            expl = (
+                f"Overdue total matches an as-of date {where} "
+                f"rather than {as_of.isoformat()}."
+            )
+            return {
+                "metric": metric,
+                "verdict": "MATCHES_OTHER_DEFINITION",
+                "explanation": expl,
+                "likely_cause": _short_cause(expl),
+                "claimed": claimed_val,
+                "recomputed_stated": recomputed,
+                "matching_definitions": [f"as_of={a.isoformat()}" for a in alts[:3]],
+            }
 
     if matches:
         if stated_def:
@@ -216,6 +218,10 @@ def attribute_claim(
                         union_dedupe=stated_def.union_dedupe,
                     )
                 axes = best.diff_axes(compare_stated)
+                if extra_hire_minor == 0:
+                    # No scenario in the question, so a hire-cost difference
+                    # is not a real definitional difference.
+                    axes = [a for a in axes if "scenario hire" not in a]
                 expl = "Agent figure matches a different definition: " + "; ".join(
                     axes[:3]
                 )
@@ -223,7 +229,7 @@ def attribute_claim(
                     "metric": metric,
                     "verdict": "MATCHES_OTHER_DEFINITION",
                     "explanation": expl,
-                    "likely_cause": _short_cause(axes[0] if axes else expl),
+                    "likely_cause": "; ".join(axes[:3]) if axes else expl,
                     "claimed": claimed_val,
                     "recomputed_stated": recomputed,
                     "matching_definitions": [m.label() for m in matches[:5]],
