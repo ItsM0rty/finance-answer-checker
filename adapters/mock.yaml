@@ -1,0 +1,39 @@
+# ASSUMPTION: this schema and these tool names are a stand-in built from public
+# product descriptions. Seapoint's real MCP tool names and schemas are not public
+# (no docs, no public repo, not in the MCP registry).
+reporting_currency: GBP
+amount_sign: negative_outflow
+
+tools:
+  transactions: list_transactions
+  invoices: list_invoices
+  balances: get_balances
+  fx_rates: get_fx_rates
+
+fields:
+  transactions_list: transactions
+  id: id
+  txn_date: txn_date
+  amount_minor: amount_minor
+  currency: currency
+  category: category
+  source: source
+  as_of: as_of
+  status: status
+  matched: matched
+  invoices_list: invoices
+  invoice_id: invoice_id
+  due_date: due_date
+  invoice_amount_minor: amount_minor
+  balances_list: balances
+  balance_as_of: as_of
+  balance_amount_minor: amount_minor
+
+fx_rates:
+  EUR:
+    "2026-07-15": 0.86
+    "2026-09-01": 0.88
+    "2026-10-01": 0.87
+  USD:
+    "2026-08-01": 0.78
+    "2026-10-01": 0.79
